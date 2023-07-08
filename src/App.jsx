@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Map from "react-map-gl";
+import Map, { Marker } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 
 import { listLogEntries } from "./Api";
@@ -24,7 +24,16 @@ function App() {
       }}
       style={{ width: "100vw", height: "100vh" }}
       mapStyle="mapbox://styles/abhiramkrishna8921/cljug9vxr002501pj6jiu65ra"
-    />
+    >
+      {logEntries.map((entry) => (
+        <Marker
+          key={entry._id}
+          longitude={entry.longitude}
+          latitude={entry.latitude}
+          anchor="bottom"
+        ></Marker>
+      ))}
+    </Map>
   );
 }
 
