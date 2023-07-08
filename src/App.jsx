@@ -9,12 +9,12 @@ function App() {
     <Map
       mapboxAccessToken={import.meta.env.VITE_APP_MAPBOX_TOKEN}
       initialViewState={{
-        longitude: -95.665,
-        latitude: 37.6,
-        zoom: 3,
+        longitude: -74.0,
+        latitude: 40.73,
+        zoom: 11,
       }}
       style={{ width: "100vw", height: "100vh" }}
-      mapStyle="mapbox://styles/abhiramkrishna8921/cljufl47a001z01pj96ax2sne"
+      mapStyle="mapbox://styles/abhiramkrishna8921/cljug9vxr002501pj6jiu65ra"
     />
   );
 }
