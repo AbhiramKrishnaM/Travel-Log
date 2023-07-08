@@ -1,9 +1,18 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Map from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 
+import { listLogEntries } from "./Api";
+
 function App() {
-  useEffect(() => {}, []);
+  const [logEntries, setLogEntries] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      const response = await listLogEntries();
+      setLogEntries(response);
+    })();
+  }, []);
 
   return (
     <Map
