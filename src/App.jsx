@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import Map, { Marker, Popup } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 
+import LogEntryForm from "./LogEntryForm";
+
 import { listLogEntries } from "./Api";
 
 function App() {
@@ -107,6 +109,7 @@ function App() {
           >
             <div className="popup">
               <h3>Add your new log entry here!</h3>
+              <LogEntryForm />
             </div>
           </Popup>
         </>
