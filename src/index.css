@@ -14,3 +14,12 @@
 body {
   overflow: hidden;
 }
+
+.marker {
+  transform: translate(-50%, -100%);
+}
+
+.popup {
+  color: black;
+  width: 400px;
+}
