@@ -1,14 +1,30 @@
 import { useForm } from "react-hook-form";
+import { useState } from "react";
+import { createLogEntry } from "./Api";
 
-function LogEntryForm() {
+function LogEntryForm({ location, onClose }) {
   const { register, handleSubmit } = useForm();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  function onSubmit(data) {
-    console.log(data);
+  async function onSubmit(data) {
+    setLoading(true);
+    try {
+      data.latitude = location.latitude;
+      data.longitude = location.longitude;
+      const created = await createLogEntry(data);
+      onClose();
+    } catch (error) {
+      console.log(error);
+      setError(error.messsage);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
     <form className="entry-form" onSubmit={handleSubmit(onSubmit)}>
+      {error ? <h3>{error}</h3> : null}
       <label htmlFor="title">Title</label>
       <input name="title" required {...register("title")} />
       <label htmlFor="comments">Comments</label>
@@ -23,7 +39,9 @@ function LogEntryForm() {
       <input name="image" {...register("image")} />
       <label htmlFor="visitdate">Visit Date</label>
       <input name="visitdate" type="date" {...register("visitDate")} required />
-      <button>Create Entry</button>
+      <button disabled={loading}>
+        {loading ? "Loading..." : "Create Entry"}
+      </button>
     </form>
   );
 }

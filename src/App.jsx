@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Map, { Marker, Popup } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 
@@ -14,10 +14,14 @@ function App() {
 
   useEffect(() => {
     (async () => {
-      const response = await listLogEntries();
-      setLogEntries(response);
+      await getEntries();
     })(); // immediately invoked functions
   }, []);
+
+  async function getEntries() {
+    const response = await listLogEntries();
+    setLogEntries(response);
+  }
 
   function showAddMArkerPopup(event) {
     setAddEntryLocation({
@@ -40,9 +44,8 @@ function App() {
       mapStyle="mapbox://styles/abhiramkrishna8921/cljug9vxr002501pj6jiu65ra"
     >
       {logEntries.map((entry) => (
-        <>
+        <React.Fragment key={entry._id}>
           <Marker
-            key={entry._id}
             longitude={entry.longitude}
             latitude={entry.latitude}
             anchor="bottom"
@@ -78,7 +81,7 @@ function App() {
               </div>
             </Popup>
           ) : null}
-        </>
+        </React.Fragment>
       ))}
 
       {addEntryLocation ? (
@@ -109,7 +112,13 @@ function App() {
           >
             <div className="popup">
               <h3>Add your new log entry here!</h3>
-              <LogEntryForm />
+              <LogEntryForm
+                onClose={() => {
+                  setAddEntryLocation(null);
+                  getEntries();
+                }}
+                location={addEntryLocation}
+              />
             </div>
           </Popup>
         </>
